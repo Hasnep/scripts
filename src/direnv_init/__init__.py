@@ -15,13 +15,16 @@ def get_cli_args() -> Path:
 def main() -> int:
     cwd = get_cli_args()
 
-    # Check if the repository is a jujutsu repository
+    # Check if the directory is a repository
     dot_jj_dir = cwd / ".jj"
-    if not (dot_jj_dir.exists() and dot_jj_dir.is_dir()):
-        print(f"The directory `{cwd}` is not a jujutsu repository.")
+    is_jj_repo = dot_jj_dir.exists() and dot_jj_dir.is_dir()
+    dot_git_dir = cwd / ".git"
+    is_git_repo = dot_git_dir.exists() and dot_git_dir.is_dir()
+    if not is_jj_repo and not is_git_repo:
+        print(f"The directory `{cwd}` is not a jujutsu or git repository.")
         return 1
 
-    # Git ignore file
+    # Add .envrc to git ignore file
     git_info_exclude_file = cwd / ".git" / "info" / "exclude"
     if not (git_info_exclude_file.exists() and git_info_exclude_file.is_file()):
         print(f"Creating git exclude file `{git_info_exclude_file}`.")
