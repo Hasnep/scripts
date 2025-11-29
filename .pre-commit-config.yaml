@@ -1,0 +1,94 @@
+repos:
+  # General checks
+  - repo: local
+    hooks:
+      - name: Make sure files end with a newline character
+        id: end-of-file-fixer
+        language: system
+        entry: end-of-file-fixer
+        types: [text]
+      - name: Remove trailing whitespace
+        id: trailing-whitespace-fixer
+        language: system
+        entry: trailing-whitespace-fixer
+        types: [text]
+      - name: Check for files that would conflict on case-insensitive filesystem
+        id: check-case-conflict
+        language: system
+        entry: check-case-conflict
+        types: [text]
+      - name: Check for merge conflicts
+        id: check-merge-conflict
+        language: system
+        entry: check-merge-conflict
+        types: [text]
+      - name: Check executable files have a shebang
+        id: check-executables-have-shebangs
+        language: system
+        entry: check-executables-have-shebangs
+        types: [text, executable]
+      - name: Check scripts with a shebang are executable
+        id: check-shebang-scripts-are-executable
+        language: system
+        entry: check-shebang-scripts-are-executable
+        types: [text]
+      - name: Don't allow adding large files
+        id: check-added-large-files
+        language: system
+        entry: check-added-large-files
+        types: [text]
+
+      # Python
+      - name: Format Python files
+        id: python-format
+        language: system
+        entry: ruff format
+        types: [python]
+      - name: Fix Python files
+        id: python-fix
+        language: system
+        entry: ruff check
+        args: [--fix, --exit-non-zero-on-fix]
+        types: [python]
+
+      # Nix
+      - name: Format Nix files
+        id: nix-format
+        language: system
+        entry: nixfmt
+        types: [nix]
+
+      # YAML
+      - name: Format YAML files
+        id: yaml-format
+        language: system
+        entry: prettier --write
+        types: [yaml]
+
+      # TOML
+      - name: Sort TOML files
+        id: toml-sort
+        language: system
+        entry: toml-sort --in-place
+        types: [toml]
+
+      # GitHub Actions
+      - name: Actionlint
+        id: actionlint
+        language: system
+        entry: actionlint
+        types: [yaml]
+        files: ^.github/workflows
+      - name: Ratchet
+        id: ratchet
+        language: system
+        entry: ratchet check
+        types: [yaml]
+        files: ^.github/workflows
+
+      # Keep-sorted
+      - name: Keep-sorted
+        id: keep-sorted
+        language: system
+        entry: keep-sorted
+        types: [text]

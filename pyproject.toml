@@ -1,0 +1,81 @@
+[project]
+name = "scripts"
+readme = "README.md"
+requires-python = ">=3.13"
+version = "0.0.0"
+dependencies = []
+description = "Various personal scripts."
+
+[project.scripts]
+devshell-compare = "devshell_compare.__init__:main"
+devshell-upgrade = "devshell_upgrade.__init__:main"
+direnv-init = "direnv_init.__init__:main"
+
+[tool.ruff.format]
+skip-magic-trailing-comma = true
+
+[tool.ruff.lint]
+select = [
+    "ALL",
+]
+ignore = [
+    "COM812",
+    "COM819",
+    "D1",
+    "D203",
+    "D212",
+    "E501",
+    "EM",
+    "ERA001",
+    "FA100",
+    "FA102",
+    "FBT003",
+    "FIX",
+    "G004",
+    "ISC003",
+    "PLR0913",
+    "PYI041",
+    "RET505",
+    "S101",
+    "S106",
+    "S603",  # Allow running subprocess with untrusted input
+    "SIM118",
+    "T20",
+    "TC002",
+    "TD",
+    "TRY003",
+    "UP006",
+    "UP015",
+]
+unfixable = [
+    "F401",
+    "ISC001",
+]
+
+[tool.ruff.lint.flake8-implicit-str-concat]
+allow-multiline = false
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api.datetime]
+msg = "The standard library's datetime has lots of pitfalls, prefer using `whenever` instead."
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api.requests]
+msg = "The requests library's API is inconsistent, prefer using `httpx` instead."
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+
+[tool.tomlsort]
+all = true
+ignore_case = true
+sort_first = [
+    "project",
+    "project.name",
+    "project.readme",
+    "project.requires-python",
+    "project.version",
+    "tool.ruff.lint.select",
+    "tool.ruff.src",
+]
+spaces_before_inline_comment = 2
+spaces_indent_inline_array = 4
+trailing_comma_inline_array = true
